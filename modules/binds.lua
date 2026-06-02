@@ -2,7 +2,7 @@
 
 local terminal    = "kitty"
 local fileManager = "nautilus --new-window"
-local menu        = "/home/akash/.config/rofi/type-2/launcher.sh"
+local menu        = "/home/akash/.config/rofi/menus/launcher.sh"
 local mainMod = "SUPER"
 
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd(terminal))
@@ -17,6 +17,13 @@ hl.bind("ALT + space", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("swaync-client -t -sw"))
+hl.bind(mainMod .. " + ALT + space", hl.dsp.exec_cmd("/home/akash/.config/rofi/menus/aiomenu.sh"))
+hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd("/home/akash/.config/rofi/menus/terminal-apps.sh"))
+hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("/home/akash/.config/hypr/scripts/clipboard-picker.sh"))
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("/home/akash/.config/hypr/scripts/layout-switcher.sh"))
+hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("hyprlock"))
+hl.bind(mainMod .. " + K", hl.dsp.exec_cmd("/home/akash/.config/hypr/scripts/kill-active.sh"))
+hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("/home/akash/.config/rofi/menus/wallpaper.sh"))
 
 hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
