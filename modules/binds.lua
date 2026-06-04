@@ -24,6 +24,7 @@ hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("/home/akash/.config/hypr/scripts/lay
 hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + K", hl.dsp.exec_cmd("/home/akash/.config/hypr/scripts/kill-active.sh"))
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("/home/akash/.config/rofi/menus/wallpaper.sh"))
+hl.bind(mainMod .. " + SHIFT + F", hl.dsp.exec_cmd("/home/akash/.config/rofi/menus/search-files.sh"))
 
 hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))

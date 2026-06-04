@@ -1,18 +1,20 @@
 #!/bin/bash
-# whatsong.sh — current playing track via playerctl
 
 STATUS=$(playerctl status 2>/dev/null)
 
 if [ "$STATUS" = "Playing" ] || [ "$STATUS" = "Paused" ]; then
-    ARTIST=$(playerctl metadata artist 2>/dev/null)
-    TITLE=$(playerctl metadata title 2>/dev/null)
-    if [ -n "$ARTIST" ] && [ -n "$TITLE" ]; then
-        echo "♪ $ARTIST — $TITLE"
-    elif [ -n "$TITLE" ]; then
-        echo "♪ $TITLE"
+    ARTIST=$(playerctl metadata artist 2>/dev/null | head -c 40)
+    TITLE=$(playerctl metadata title 2>/dev/null | head -c 50)
+
+    if [ "$STATUS" = "Paused" ]; then
+        ICON="⏸"
     else
-        echo ""
+        ICON="♪"
     fi
-else
-    echo ""
+
+    if [ -n "$ARTIST" ] && [ -n "$TITLE" ]; then
+        echo "$ICON $ARTIST — $TITLE"
+    elif [ -n "$TITLE" ]; then
+        echo "$ICON $TITLE"
+    fi
 fi

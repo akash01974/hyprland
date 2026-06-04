@@ -1,13 +1,23 @@
 #!/bin/bash
 
-read -r X Y <<< $(slurp -p -f '%x %y' 2>/dev/null) || exit 1
+COORDS=$(slurp -p -f '%x,%y' 2>/dev/null) || exit 1
+X=${COORDS%,*}
+Y=${COORDS#*,}
 
-PID=$(hyprctl clients -j | jq -r --arg x "$X" --arg y "$Y" '
+# Get current active workspace ID
+ACTIVE_WS=$(hyprctl activeworkspace -j | jq -r '.id')
+
+PID=$(hyprctl clients -j | jq -r \
+  --argjson x "$X" --argjson y "$Y" \
+  --argjson ws "$ACTIVE_WS" '
   .[] | select(
-    .at[0] <= ($x | tonumber) and
-    .at[0] + .size[0] >= ($x | tonumber) and
-    .at[1] <= ($y | tonumber) and
-    .at[1] + .size[1] >= ($y | tonumber)
+    .workspace.id == $ws and
+    .at[0]            <= $x and
+    .at[0] + .size[0] >= $x and
+    .at[1]            <= $y and
+    .at[1] + .size[1] >= $y
   ) | .pid' | head -1)
 
-[ -n "$PID" ] && [ "$PID" -gt 0 ] 2>/dev/null && kill -9 "$PID"
+if [[ -n "$PID" && "$PID" -gt 0 ]]; then
+  kill -9 "$PID"
+fi
