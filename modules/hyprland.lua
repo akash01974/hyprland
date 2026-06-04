@@ -1,1 +1,0 @@
--- Main Hyprland configuration module
