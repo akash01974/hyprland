@@ -1,30 +1,39 @@
 --[[ KEYBINDINGS ]]
 
 local terminal    = "kitty"
-local fileManager = "nautilus --new-window"
-local menu        = "/home/akash/.config/rofi/menus/launcher.sh"
+local fileManager = "thunar"
+local menu        = "/home/akash/.config/hypr/scripts/launcher.sh"
 local mainMod = "SUPER"
 
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd(terminal))
 
 local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
-hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
+hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("/home/akash/.config/waybar/scripts/launch.sh"))
+-- hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("/home/akash/.config/waybar/scripts/launch.sh"))
 hl.bind("ALT + space", hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
-hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("swaync-client -t -sw"))
-hl.bind(mainMod .. " + ALT + space", hl.dsp.exec_cmd("/home/akash/.config/rofi/menus/aiomenu.sh"))
-hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd("/home/akash/.config/rofi/menus/terminal-apps.sh"))
-hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("/home/akash/.config/hypr/scripts/clipboard-picker.sh"))
+hl.bind(mainMod .. " + N", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/scripts/sidebar-notif.sh"))
+-- hl.bind(mainMod .. " + ALT + space", hl.dsp.exec_cmd("/home/akash/.config/rofi/menus/aiomenu.sh"))
+-- hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd("/home/akash/.config/rofi/menus/terminal-apps.sh"))
+hl.bind("ALT + C", hl.dsp.exec_cmd("/home/akash/.config/hypr/scripts/clipboard.sh"))
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("/home/akash/.config/hypr/scripts/layout-switcher.sh"))
 hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + K", hl.dsp.exec_cmd("/home/akash/.config/hypr/scripts/kill-active.sh"))
-hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("/home/akash/.config/rofi/menus/wallpaper.sh"))
-hl.bind(mainMod .. " + SHIFT + F", hl.dsp.exec_cmd("/home/akash/.config/rofi/menus/search-files.sh"))
+hl.bind(mainMod .. " + W", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/scripts/wallpaper.sh"))
+hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/scripts/wallpaper-picker.sh"))
+-- hl.bind(mainMod .. " + SHIFT + F", hl.dsp.exec_cmd("/home/akash/.config/rofi/menus/search-files.sh"))
+-- Quickshell: sidebar (notifications, network, bluetooth, etc.)
+hl.bind(mainMod .. " + S", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/scripts/sidebar.sh"))
+hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/scripts/power.sh"))
+hl.bind("ALT + M", hl.dsp.exec_cmd("qs -c pill ipc call pill media $(hyprctl activeworkspace -j | jq -r '.monitor')"))
+hl.bind(mainMod .. " + G", hl.dsp.exec_cmd("qs -c pill ipc call pill gameMode $(hyprctl activeworkspace -j | jq -r '.monitor')"))
+hl.bind("ALT + S", hl.dsp.exec_cmd("qs -c pill ipc call pill sharing $(hyprctl activeworkspace -j | jq -r '.monitor')"))
+hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.local/bin/AppImages/Handy_0.9.6_amd64.AppImage --toggle-transcription"))
 
 hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
@@ -37,8 +46,15 @@ for i = 1, 10 do
     hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
-hl.bind(mainMod .. " + S", hl.dsp.workspace.toggle_special("magic"))
+-- hl.bind(mainMod .. " + S", hl.dsp.workspace.toggle_special("magic"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
+hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/scripts/toggle-panel.sh"))
+hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/scripts/qs-restart.sh"))
+
+-- Special workspaces (managed from pill settings)
+hl.bind(mainMod .. " + A", hl.dsp.workspace.toggle_special("stash"))
+hl.bind(mainMod .. " + I", hl.dsp.workspace.toggle_special("private"))
+hl.bind(mainMod .. " + SHIFT + H", hl.dsp.workspace.toggle_special("minimized"))
 
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
 hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
@@ -46,8 +62,8 @@ hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true })
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true })
 hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),     { locked = true, repeating = true })
 hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"), { locked = true, repeating = true })
 
@@ -60,6 +76,6 @@ hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 
 -- Screenshot keybindings (hyprshot)
-hl.bind("Print", hl.dsp.exec_cmd("hyprshot -m output"), { locked = true })
-hl.bind("SHIFT + Print", hl.dsp.exec_cmd("hyprshot -m window"), { locked = true })
+hl.bind("Print", hl.dsp.exec_cmd("hyprshot -m output -m active"), { locked = true })
+hl.bind("SHIFT + Print", hl.dsp.exec_cmd("hyprshot -m window -m active"), { locked = true })
 hl.bind("CTRL + Print", hl.dsp.exec_cmd("hyprshot -m region"), { locked = true })

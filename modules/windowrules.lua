@@ -28,6 +28,13 @@ hl.window_rule({
 })
 
 hl.layer_rule({
+    name = "pill-base",
+    match = { namespace = "pill" },
+    no_anim = true,
+    ignore_alpha = 0.5,
+})
+
+hl.layer_rule({
     name = "rofi-dropdown",
     match = { namespace = "rofi" },
     animation = "slide bottom",
@@ -36,19 +43,12 @@ hl.layer_rule({
     ignore_alpha = 0.2,
 })
 
-hl.layer_rule({
-    name = "notification-animations",
-    match = { namespace = "swaync-control-center" },
-    animation = "slide right",
-    blur = true,
-    ignore_alpha = 0.5,
-})
 
 hl.layer_rule({
-    name = "notification-popup-blur",
-    match = { namespace = "swaync-notification" },
+    name = "wlogout-blur",
+    match = { namespace = "wlogout" },
     blur = true,
-    ignore_alpha = 0.5,
+    ignore_alpha = 0.2,
 })
 
 hl.window_rule({
@@ -68,3 +68,42 @@ hl.window_rule({
     match = { class = "kitty" },
     opacity = 0.7,
 })
+
+hl.window_rule({
+    name = "spotify-blur",
+    match = { class = "Spotify" },
+    opacity = 0.75,
+})
+
+hl.window_rule({
+    name = "thunar-appearance",
+    match = { class = "Thunar" },
+    rounding = 16,
+})
+
+hl.window_rule({
+    name = "thunar-opacity",
+    match = { class = "Thunar" },
+    opacity = 0.95,
+})
+
+-- window focus handled by misc.focus_on_activate
+
+-- Stash / Private / Minimized: auto-route configured apps to special workspaces
+local lists = {
+    stash     = "modules.stash-apps",
+    private   = "modules.private-apps",
+    minimized = "modules.minimized-apps",
+}
+for wsName, modName in pairs(lists) do
+    local ok, apps = pcall(require, modName)
+    if ok and type(apps) == "table" then
+        for _, cls in ipairs(apps) do
+            hl.window_rule({
+                name      = wsName .. "-" .. cls,
+                match     = { class = cls },
+                workspace = "special:" .. wsName,
+            })
+        end
+    end
+end

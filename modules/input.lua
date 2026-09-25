@@ -16,6 +16,9 @@ hl.config({
             natural_scroll = false,
         },
     },
+    cursor = {
+        no_hardware_cursors = true,
+    },
 })
 
 hl.gesture({

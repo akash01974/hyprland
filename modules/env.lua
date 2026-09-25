@@ -34,7 +34,9 @@ hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
 hl.env("XDG_SESSION_TYPE", "wayland")
 hl.env("XDG_SESSION_DESKTOP", "Hyprland")
 
-hl.env("GTK_THEME", "Adwaita-dark")
+hl.env("GTK_THEME", "WhiteSur-Dark")
 
 hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 hl.env("QT_QPA_PLATFORM", "wayland")
+hl.env("XCURSOR_THEME", "Vision-Cursor-White")
+hl.env("HYPRCURSOR_THEME", "Vision-Cursor-White")
