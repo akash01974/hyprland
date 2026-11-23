@@ -151,3 +151,4 @@ Spotify desktop updates occasionally adjust internal class names or DOM structur
 
 > [!IMPORTANT]
 > When updating Spicetify or Spotify, always execute `spicetify backup apply` or `spicetify upgrade` to maintain binary injection compatibility.
+

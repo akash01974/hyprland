@@ -166,7 +166,7 @@
   }
 
   Spicetify.Player.addEventListener("songchange", () => setTimeout(update, 200));
-
+  
   // Retry update in case player data isn't ready on startup
   let retries = 0;
   function tryUpdate() {
