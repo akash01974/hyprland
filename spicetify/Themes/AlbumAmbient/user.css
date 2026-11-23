@@ -1,0 +1,150 @@
+/* ==========================================================================
+   AlbumAmbient — album-art driven ambient theme for Spotify (Spicetify)
+   Colours come from theme.js via four variables on <html>:
+     --album-primary  --album-secondary  --album-accent  --album-background
+   Everything else (gradients, surfaces, hover states) is derived here.
+   Requires a Chromium-based Spotify client with @property and color-mix().
+   ========================================================================== */
+
+/* --- 1. Animatable palette -------------------------------------------------
+   Registering the variables as <color> lets the browser interpolate them, so
+   every derived gradient crossfades when the track changes. */
+@property --album-primary    { syntax: "<color>"; inherits: true; initial-value: #2b2b52; }
+@property --album-secondary  { syntax: "<color>"; inherits: true; initial-value: #3d2a4f; }
+@property --album-accent     { syntax: "<color>"; inherits: true; initial-value: #9aa3e0; }
+@property --album-background { syntax: "<color>"; inherits: true; initial-value: #0a0a12; }
+
+:root {
+  transition:
+    --album-primary    1.1s cubic-bezier(.4, 0, .2, 1),
+    --album-secondary  1.1s cubic-bezier(.4, 0, .2, 1),
+    --album-accent     1.1s cubic-bezier(.4, 0, .2, 1),
+    --album-background 1.1s cubic-bezier(.4, 0, .2, 1);
+
+  /* --- 2. Derived tokens ------------------------------------------------- */
+  --ambient-gradient:
+    radial-gradient(70% 55% at 12% -5%,  color-mix(in srgb, var(--album-primary)   85%, transparent) 0%, transparent 70%),
+    radial-gradient(60% 50% at 95% 10%,  color-mix(in srgb, var(--album-secondary) 65%, transparent) 0%, transparent 70%),
+    radial-gradient(80% 45% at 50% 115%, color-mix(in srgb, var(--album-primary)   45%, transparent) 0%, transparent 70%),
+    radial-gradient(40% 35% at 85% 85%,  color-mix(in srgb, var(--album-accent)    14%, transparent) 0%, transparent 70%),
+    linear-gradient(160deg, var(--album-background) 0%, color-mix(in srgb, var(--album-background) 80%, var(--album-secondary)) 100%);
+
+  --ambient-surface:       color-mix(in srgb, var(--album-background) 55%, transparent);
+  --ambient-surface-solid: color-mix(in srgb, var(--album-background) 93%, var(--album-primary));
+  --ambient-hover:         color-mix(in srgb, var(--album-accent) 14%, transparent);
+  --ambient-press:         color-mix(in srgb, var(--album-accent) 22%, transparent);
+  --ambient-border:        color-mix(in srgb, var(--album-accent) 18%, transparent);
+}
+
+/* --- 3. Spotify (Encore) design tokens --------------------------------------
+   Most components read these variables, so overriding them recolours buttons,
+   cards, rows, chips, inputs, popovers and modals without per-class rules. */
+:root,
+body,
+.encore-dark-theme,
+.encore-base-set,
+.encore-dark-theme .encore-base-set,
+.encore-increased-contrast-set {
+  --background-base: var(--ambient-surface) !important;
+  --background-highlight: var(--ambient-hover) !important;
+  --background-press: var(--ambient-press) !important;
+
+  --background-elevated-base: var(--ambient-surface-solid) !important;
+  --background-elevated-highlight: color-mix(in srgb, var(--ambient-surface-solid) 85%, var(--album-accent)) !important;
+  --background-elevated-press: color-mix(in srgb, var(--ambient-surface-solid) 78%, var(--album-accent)) !important;
+
+  --background-tinted-base: color-mix(in srgb, var(--album-primary) 18%, transparent) !important;
+  --background-tinted-highlight: color-mix(in srgb, var(--album-primary) 28%, transparent) !important;
+  --background-tinted-press: color-mix(in srgb, var(--album-primary) 36%, transparent) !important;
+
+  --text-base: #ffffff !important;
+  --text-subdued: #bdbdc7 !important;
+  --text-bright-accent: var(--album-accent) !important;
+  --essential-bright-accent: var(--album-accent) !important;
+  --essential-subdued: #a3a3b2 !important;
+  --decorative-subdued: var(--ambient-border) !important;
+}
+
+/* Accent-filled controls (play button etc.): album accent, dark glyph. */
+.encore-bright-accent-set {
+  --background-base: var(--album-accent) !important;
+  --background-highlight: color-mix(in srgb, var(--album-accent) 88%, #fff) !important;
+  --background-press: color-mix(in srgb, var(--album-accent) 88%, #000) !important;
+  --text-base: #0a0a12 !important;
+}
+
+/* --- 4. One continuous canvas -----------------------------------------------
+   The gradient is painted once, behind everything. Panels are translucent
+   (via --background-base above) so it reads as a single environment. */
+body,
+.Root {
+  background-color: var(--album-background) !important;
+}
+.Root__top-container {
+  background: var(--ambient-gradient) !important;
+}
+
+.Root__globalNav,
+.Root__now-playing-bar,
+.main-nowPlayingBar-container,
+.main-nowPlayingBar-nowPlayingBar {
+  background: transparent !important;
+  border-top-color: transparent !important;
+}
+
+/* --- 5. Page headers with hard-coded colours --------------------------------
+   Playlist/album/artist/home headers tint themselves; let the ambient show. */
+.main-entityHeader-background,
+.main-entityHeader-backgroundColor,
+.main-entityHeader-overlay,
+.main-actionBarBackground-background,
+.main-home-homeHeader,
+.main-topBar-overlay {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Top bar fades in as you scroll (Spotify animates its opacity). */
+.main-topBar-background {
+  background-color: var(--album-background) !important;
+}
+
+/* Sticky list header stays readable over scrolling rows (no blur needed). */
+.main-trackList-trackListHeader {
+  background-color: color-mix(in srgb, var(--album-background) 90%, transparent) !important;
+}
+
+/* Native lyrics page (class names vary by version). */
+[class*="lyrics-lyrics-background"] {
+  background: transparent !important;
+}
+
+/* --- 6. Menus, dropdowns, dialogs -------------------------------------------
+   Small surfaces only: a light blur here is cheap. */
+.main-contextMenu-menu,
+.main-contextMenu-subMenu {
+  border: 1px solid var(--ambient-border);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+.main-trackCreditsModal-container,
+.main-embedWidgetGenerator-container {
+  border: 1px solid var(--ambient-border);
+}
+.GenericModal__overlay {
+  background: color-mix(in srgb, var(--album-background) 70%, transparent) !important;
+}
+
+/* --- 7. Details --------------------------------------------------------------*/
+::selection {
+  background: color-mix(in srgb, var(--album-accent) 40%, transparent);
+}
+::-webkit-scrollbar-thumb,
+.os-theme-spotify > .os-scrollbar > .os-scrollbar-track > .os-scrollbar-handle {
+  background-color: color-mix(in srgb, var(--album-accent) 35%, transparent) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { transition: none; }
+}

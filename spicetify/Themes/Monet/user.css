@@ -1,0 +1,310 @@
+/* ==========================================================
+   Monet — Material You (Material 3) theme for Spicetify
+   Dynamic color from cover art, tonal surface containers,
+   big rounded shapes, state layers and ripples.
+   ========================================================== */
+
+:root {
+  /* Fallbacks until theme.js generates the palette */
+  --md-primary: var(--spice-button);
+  --md-on-primary: #381e72;
+  --md-primary-container: #4f378b;
+  --md-on-primary-container: #eaddff;
+  --md-secondary: #ccc2dc;
+  --md-secondary-container: #4a4458;
+  --md-on-secondary-container: #e8def8;
+  --md-tertiary: #efb8c8;
+  --md-surface-dim: var(--spice-main);
+  --md-surface: var(--spice-main);
+  --md-surface-container-lowest: var(--spice-main);
+  --md-surface-container-low: var(--spice-main-elevated);
+  --md-surface-container: var(--spice-player);
+  --md-surface-container-high: var(--spice-highlight);
+  --md-surface-container-highest: var(--spice-highlight-elevated);
+  --md-on-surface: var(--spice-text);
+  --md-on-surface-variant: var(--spice-subtext);
+  --md-outline: #938f99;
+  --md-outline-variant: var(--spice-misc);
+  --md-error: var(--spice-notification-error);
+
+  /* Shape scale */
+  --md-shape-xs: 8px;
+  --md-shape-sm: 12px;
+  --md-shape-md: 16px;
+  --md-shape-lg: 20px;
+  --md-shape-xl: 28px;
+
+  /* State layers: hover 8%, focus/press 12% */
+  --md-hover: color-mix(in srgb, var(--md-on-surface) 8%, transparent);
+  --md-press: color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+
+  --md-gap: 8px;
+  --md-emph: cubic-bezier(.2, 0, 0, 1);
+  --md-elev-2: 0 1px 2px rgba(0,0,0,.3), 0 2px 6px 2px rgba(0,0,0,.15);
+  --md-elev-3: 0 1px 3px rgba(0,0,0,.3), 0 4px 8px 3px rgba(0,0,0,.15);
+}
+
+/* ---------- App canvas + Spotify's internal tokens ---------- */
+body, .Root, .Root__top-container {
+  background: var(--md-surface-dim) !important;
+}
+.Root__top-container {
+  gap: var(--md-gap);
+  padding: var(--md-gap);
+  --background-base: var(--md-surface-container);
+  --background-highlight: var(--md-surface-container-high);
+  --background-press: var(--md-surface-container-highest);
+  --background-elevated-base: var(--md-surface-container-high);
+  --background-elevated-highlight: var(--md-surface-container-highest);
+  --text-base: var(--md-on-surface);
+  --text-subdued: var(--md-on-surface-variant);
+  --text-bright-accent: var(--md-primary);
+  --essential-bright-accent: var(--md-primary);
+  --essential-base: var(--md-on-surface);
+  --essential-subdued: var(--md-outline);
+  --decorative-subdued: var(--md-outline-variant);
+}
+
+/* ---------- Panes: tonal surface containers ---------- */
+.Root__nav-bar,
+.Root__main-view,
+.Root__right-sidebar,
+.Root__lyrics-cinema,
+.main-yourLibraryX-libraryContainer,
+.main-navBar-navBar {
+  background: var(--md-surface-container) !important;
+  border-radius: var(--md-shape-xl) !important;
+  overflow: hidden;
+  transition: background-color .7s var(--md-emph);
+}
+.Root__nav-bar .main-yourLibraryX-libraryContainer,
+.Root__nav-bar .main-navBar-navBar { background: transparent !important; border-radius: 0 !important; }
+.main-view-container, .main-view-container__scroll-node-child,
+.main-home-content, .main-topBar-background { background: transparent !important; }
+.main-topBar-container { background: color-mix(in srgb, var(--md-surface-container) 88%, transparent) !important; backdrop-filter: blur(12px); }
+
+/* ---------- Navigation: pill indicators ---------- */
+.main-navBar-navBarLink, .main-yourLibraryX-listItem {
+  border-radius: var(--md-shape-lg) !important;
+  transition: background-color .25s var(--md-emph), color .25s var(--md-emph);
+}
+.main-navBar-navBarLink:hover,
+.main-yourLibraryX-listItem:hover { background: var(--md-hover) !important; }
+.main-navBar-navBarLinkActive,
+.main-yourLibraryX-listItem[aria-selected="true"],
+.main-yourLibraryX-listItem.main-yourLibraryX-isActive {
+  background: var(--md-secondary-container) !important;
+  color: var(--md-on-secondary-container) !important;
+}
+.main-navBar-navBarLinkActive * { color: var(--md-on-secondary-container) !important; }
+
+/* ---------- Search: M3 search bar ---------- */
+.x-searchInput-searchInputInput,
+.main-topBar-searchBar input,
+[data-encore-id="formInput"] {
+  background: var(--md-surface-container-high) !important;
+  border: 0 !important;
+  border-radius: var(--md-shape-xl) !important;
+  color: var(--md-on-surface) !important;
+  box-shadow: none !important;
+  transition: background-color .25s var(--md-emph), box-shadow .25s var(--md-emph);
+}
+.x-searchInput-searchInputInput:focus,
+[data-encore-id="formInput"]:focus {
+  background: var(--md-surface-container-highest) !important;
+  box-shadow: inset 0 0 0 2px var(--md-primary) !important;
+}
+
+/* ---------- Buttons ---------- */
+[data-encore-id="buttonPrimary"],
+.main-playButton-PlayButton,
+.main-playButton-PlayButton > button {
+  background: var(--md-primary) !important;
+  color: var(--md-on-primary) !important;
+  border-radius: var(--md-shape-lg) !important;
+  box-shadow: none !important;
+  transition: border-radius .3s var(--md-emph), box-shadow .3s var(--md-emph), transform .2s var(--md-emph);
+}
+[data-encore-id="buttonPrimary"]:hover { box-shadow: var(--md-elev-2) !important; transform: none; }
+[data-encore-id="buttonPrimary"] * { color: var(--md-on-primary) !important; }
+
+[data-encore-id="buttonSecondary"],
+[data-encore-id="buttonTertiary"] {
+  background: transparent !important;
+  color: var(--md-primary) !important;
+  border: 1px solid var(--md-outline) !important;
+  border-radius: var(--md-shape-lg) !important;
+}
+[data-encore-id="buttonSecondary"]:hover,
+[data-encore-id="buttonTertiary"]:hover { background: color-mix(in srgb, var(--md-primary) 8%, transparent) !important; }
+
+/* Big play on playlists/albums: FAB shape that morphs on hover */
+.main-playButton-PlayButton { width: 56px !important; height: 56px !important; border-radius: var(--md-shape-lg) !important; }
+.main-playButton-PlayButton:hover { border-radius: 50% !important; box-shadow: var(--md-elev-3) !important; }
+
+/* ---------- Chips: M3 filter chips ---------- */
+[data-encore-id="chip"],
+.x-filterBox-filterInput,
+.main-yourLibraryX-filterArea button {
+  background: transparent !important;
+  color: var(--md-on-surface-variant) !important;
+  border: 1px solid var(--md-outline) !important;
+  border-radius: var(--md-shape-xs) !important;
+  transition: background-color .2s var(--md-emph);
+}
+[data-encore-id="chip"]:hover { background: var(--md-hover) !important; }
+[data-encore-id="chip"][aria-checked="true"],
+[data-encore-id="chip"][aria-pressed="true"],
+[data-encore-id="chip"][data-active="true"] {
+  background: var(--md-secondary-container) !important;
+  color: var(--md-on-secondary-container) !important;
+  border-color: transparent !important;
+}
+
+/* ---------- Cards ---------- */
+.main-card-card {
+  background: var(--md-surface-container-low) !important;
+  border-radius: var(--md-shape-lg) !important;
+  transition: background-color .25s var(--md-emph), box-shadow .25s var(--md-emph);
+}
+.main-card-card:hover {
+  background: var(--md-surface-container-high) !important;
+  box-shadow: var(--md-elev-2);
+}
+.main-card-imageContainer img, .main-cardImage-image, .main-cardImage-imageWrapper { border-radius: var(--md-shape-md) !important; }
+.main-shortcuts-shortcut, [data-testid="shortcut-tile"] {
+  background: var(--md-surface-container-high) !important;
+  border-radius: var(--md-shape-md) !important;
+}
+.main-shortcuts-shortcut:hover { background: var(--md-surface-container-highest) !important; }
+
+/* ---------- Entity headers: tonal wash from the palette ---------- */
+.main-entityHeader-background,
+.main-actionBarBackground-background { background: transparent !important; }
+.main-entityHeader-container,
+.main-entityHeader-container.main-entityHeader-withBackgroundImage {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--md-primary-container) 70%, transparent), transparent) !important;
+}
+.main-entityHeader-image { border-radius: var(--md-shape-xl) !important; box-shadow: var(--md-elev-3); }
+.main-actionBar-ActionBar { background: transparent !important; }
+
+/* ---------- Track list ---------- */
+.main-trackList-trackListHeader {
+  background: var(--md-surface-container) !important;
+  border-bottom: 1px solid var(--md-outline-variant) !important;
+}
+.main-trackList-trackListRow {
+  border-radius: var(--md-shape-md) !important;
+  transition: background-color .2s var(--md-emph);
+}
+.main-trackList-trackListRow:hover { background: var(--md-hover) !important; }
+.main-trackList-selected { background: var(--md-press) !important; }
+.main-trackList-active { background: color-mix(in srgb, var(--md-primary-container) 55%, transparent) !important; }
+.main-trackList-active .main-trackList-rowTitle,
+.main-trackList-active .main-trackList-rowMainContent a { color: var(--md-primary) !important; }
+
+/* ---------- Now-playing bar: floating tonal surface ---------- */
+.Root__now-playing-bar { padding: 0 !important; }
+.main-nowPlayingBar-container {
+  background: var(--md-surface-container-high) !important;
+  border-radius: var(--md-shape-xl) !important;
+  box-shadow: var(--md-elev-2);
+  overflow: hidden;
+}
+.main-nowPlayingBar-nowPlayingBar { background: transparent !important; padding: 0 8px; }
+.main-nowPlayingWidget-nowPlaying img,
+.main-coverSlotCollapsed-container img,
+.cover-art img { border-radius: var(--md-shape-md) !important; }
+
+/* Play/pause: filled tonal FAB */
+.main-playPauseButton-button,
+[data-testid="control-button-playpause"] {
+  width: 48px !important; height: 48px !important;
+  background: var(--md-primary-container) !important;
+  color: var(--md-on-primary-container) !important;
+  border-radius: var(--md-shape-md) !important;
+  transition: border-radius .3s var(--md-emph), box-shadow .3s var(--md-emph);
+}
+.main-playPauseButton-button:hover,
+[data-testid="control-button-playpause"]:hover {
+  border-radius: 50% !important;
+  box-shadow: var(--md-elev-2);
+  transform: none !important;
+}
+.main-playPauseButton-button svg, [data-testid="control-button-playpause"] svg { fill: var(--md-on-primary-container) !important; }
+
+/* Transport icons: circular state layers */
+.player-controls__buttons button,
+.main-nowPlayingBar-extraControls button {
+  border-radius: 50% !important;
+  transition: background-color .2s var(--md-emph);
+}
+.player-controls__buttons button:hover,
+.main-nowPlayingBar-extraControls button:hover { background: var(--md-hover) !important; }
+.control-button--active, .control-button-heart.control-button--active { color: var(--md-primary) !important; }
+
+/* ---------- Sliders ---------- */
+.progress-bar { --progress-bar-active-color: var(--md-primary); --progress-bar-height: 6px; }
+.x-progressBar-fillColor, .progress-bar__fill { background: var(--md-primary) !important; border-radius: 99px; }
+.x-progressBar-progressBarBg, .progress-bar__bg { background: var(--md-surface-container-highest) !important; border-radius: 99px; height: 6px; }
+.progress-bar__slider, .x-progressBar-sliderArea::after { background: var(--md-primary) !important; box-shadow: none; }
+
+/* ---------- Menus & dialogs ---------- */
+.main-contextMenu-menu,
+.main-popupMenu-popup {
+  background: var(--md-surface-container) !important;
+  border-radius: var(--md-shape-sm) !important;
+  box-shadow: var(--md-elev-3) !important;
+  padding: 8px 0 !important;
+}
+.main-contextMenu-menuItemButton { border-radius: 0 !important; }
+.main-contextMenu-menuItemButton:hover,
+.main-contextMenu-menuItem:hover { background: var(--md-hover) !important; }
+.GenericModal > div,
+.main-trackCreditsModal-container,
+[role="dialog"] > div {
+  background: var(--md-surface-container-high) !important;
+  border-radius: var(--md-shape-xl) !important;
+  box-shadow: var(--md-elev-3);
+  color: var(--md-on-surface);
+}
+
+/* Snackbar-style toasts */
+.Toastify__toast, .main-notificationBubble-container {
+  background: var(--md-surface-container-highest) !important;
+  color: var(--md-on-surface) !important;
+  border-radius: var(--md-shape-xs) !important;
+}
+
+/* ---------- Lyrics ---------- */
+.lyrics-lyrics-container, .lyrics-lyricsContainer-LyricsBackground { background: transparent !important; }
+.lyrics-lyricsContent-active { color: var(--md-primary) !important; }
+
+/* ---------- Ripple ---------- */
+.md-ripple-host { position: relative; overflow: hidden; }
+.md-ripple {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  background: color-mix(in srgb, currentColor 22%, transparent);
+  transform: scale(0);
+  animation: md-ripple .55s var(--md-emph) forwards;
+}
+@keyframes md-ripple { to { transform: scale(1); opacity: 0; } }
+
+/* ---------- Misc polish ---------- */
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--md-outline-variant);
+  border-radius: 99px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--md-outline); background-clip: padding-box; }
+::selection { background: var(--md-primary-container); color: var(--md-on-primary-container); }
+:focus-visible { outline: 2px solid var(--md-primary); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}

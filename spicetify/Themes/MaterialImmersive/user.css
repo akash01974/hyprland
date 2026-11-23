@@ -1,0 +1,122 @@
+/* Material Immersive — Material 3 for Spicetify */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300..800&display=swap');
+
+:root {
+  --md-r-s: 12px; --md-r-m: 16px; --md-r-l: 24px; --md-r-xl: 28px;
+  --md-ease: cubic-bezier(.2, 0, 0, 1);
+  --md-ease-emph: cubic-bezier(.3, 0, 0, 1);
+  /* fallbacks; theme.js overrides these from the album art */
+  --md-primary: #D0BCFF; --md-on-primary: #381E72;
+  --md-primary-container: #4F378B; --md-on-primary-container: #EADDFF;
+  --md-secondary-container: #4A4458; --md-on-secondary-container: #E8DEF8;
+  --md-surface-rgb: 20,18,24; --md-container-rgb: 33,31,38; --md-container-high-rgb: 43,41,48;
+  --md-on-surface-rgb: 230,224,233;
+  --md-pane-alpha: .58;
+  --spotify-font: "Roboto Flex", "Roboto", system-ui, sans-serif;
+}
+
+body, .Root, * { font-family: var(--spotify-font) !important; }
+html, body, .Root { background: rgb(var(--md-surface-rgb)) !important; }
+
+/* ── Immersive backdrop (created by theme.js) ───────────────────── */
+#md-backdrop { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+#md-backdrop .layer {
+  position: absolute; inset: -12%; background-size: cover; background-position: center;
+  filter: blur(90px) saturate(1.6) brightness(.85); opacity: 0;
+  transform: scale(1.1); transition: opacity 1.4s var(--md-ease), transform 18s linear;
+}
+#md-backdrop .layer.on { opacity: .75; transform: scale(1.25); }
+#md-backdrop::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(var(--md-surface-rgb), .15), rgba(var(--md-surface-rgb), .7));
+}
+.Root__top-container {
+  position: relative; z-index: 1; background: transparent !important;
+  --background-base: rgba(var(--md-surface-rgb), var(--md-pane-alpha));
+  --background-highlight: rgba(var(--md-on-surface-rgb), .08);
+  --background-press: rgba(var(--md-on-surface-rgb), .12);
+  --background-elevated-base: rgba(var(--md-container-high-rgb), .75);
+  --background-elevated-highlight: rgba(var(--md-container-high-rgb), .9);
+  --background-tinted-base: rgba(var(--md-on-surface-rgb), .08);
+  --background-tinted-highlight: rgba(var(--md-on-surface-rgb), .12);
+  --essential-bright-accent: var(--md-primary);
+  --text-bright-accent: var(--md-primary);
+}
+
+/* ── Panes: floating tonal surfaces with glass blur ────────────── */
+.Root__nav-bar, .Root__main-view, .Root__right-sidebar, .Root__now-playing-bar {
+  border-radius: var(--md-r-xl) !important; overflow: hidden;
+  background: rgba(var(--md-surface-rgb), var(--md-pane-alpha)) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(1.4); backdrop-filter: blur(28px) saturate(1.4);
+}
+.Root__now-playing-bar {
+  background: rgba(var(--md-container-high-rgb), .72) !important;
+  box-shadow: 0 6px 24px rgba(0,0,0,.28);
+}
+.main-nowPlayingBar-container, .main-view-container, .main-view-container__scroll-node-child,
+.main-topBar-background, .main-entityHeader-background, .main-actionBarBackground-background,
+.main-home-homeHeader { background: transparent !important; background-image: none !important; }
+
+/* ── Navigation: pill items, active = secondary container ──────── */
+.main-navBar-navBarLink, .main-yourLibraryX-navLink {
+  border-radius: 999px !important; padding-inline: 16px; transition: background .25s var(--md-ease);
+}
+.main-navBar-navBarLink:hover { background: rgba(var(--md-on-surface-rgb), .08); }
+.main-navBar-navBarLinkActive {
+  background: var(--md-secondary-container) !important; color: var(--md-on-secondary-container) !important;
+}
+
+/* ── Cards ─────────────────────────────────────────────────────── */
+.main-card-card {
+  position: relative; overflow: hidden; padding: 14px !important;
+  border-radius: var(--md-r-l) !important; background: rgba(var(--md-container-high-rgb), .55) !important;
+  transition: background .25s var(--md-ease), transform .35s var(--md-ease-emph);
+}
+.main-card-card:hover { background: rgba(var(--md-container-high-rgb), .85) !important; transform: translateY(-2px); }
+.main-card-imageContainer, .main-card-imageContainer img { border-radius: var(--md-r-m) !important; }
+
+/* ── Buttons: FAB-style play (rounded square) ──────────────────── */
+.main-playButton-PlayButton, button[data-testid="play-button"],
+.main-actionBar-ActionBar button[data-encore-id="buttonPrimary"] {
+  position: relative; overflow: hidden; border-radius: 18px !important;
+  background: var(--md-primary-container) !important; color: var(--md-on-primary-container) !important;
+  transition: border-radius .3s var(--md-ease-emph), transform .2s var(--md-ease);
+}
+.main-playButton-PlayButton:hover, button[data-testid="play-button"]:hover { border-radius: 28px !important; transform: scale(1.04); }
+.main-playButton-PlayButton svg, button[data-testid="play-button"] svg { fill: currentColor !important; }
+[data-testid="control-button-playpause"] {
+  position: relative; overflow: hidden; width: 44px !important; height: 44px !important;
+  border-radius: 16px !important; background: var(--md-primary) !important; color: var(--md-on-primary) !important;
+  transition: border-radius .3s var(--md-ease-emph);
+}
+[data-testid="control-button-playpause"]:hover { border-radius: 22px !important; transform: none !important; }
+[data-testid="control-button-playpause"] svg { fill: currentColor !important; }
+
+/* ── Track rows & search ───────────────────────────────────────── */
+.main-trackList-trackListRow { position: relative; overflow: hidden; border-radius: var(--md-r-m) !important; }
+.main-trackList-trackListRow:hover { background: rgba(var(--md-on-surface-rgb), .08) !important; }
+.main-trackList-selected, .main-trackList-active { background: var(--md-secondary-container) !important; }
+input[data-testid="search-input"] {
+  border-radius: 999px !important; background: rgba(var(--md-container-high-rgb), .8) !important; height: 48px;
+}
+
+/* ── Progress & scrollbars ─────────────────────────────────────── */
+.progress-bar, .playback-progressbar {
+  --progress-bar-height: 6px; --fg-color: var(--md-primary);
+  --bg-color: rgba(var(--md-on-surface-rgb), .18); border-radius: 999px;
+}
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-thumb { background: rgba(var(--md-on-surface-rgb), .22); border-radius: 999px; border: 3px solid transparent; background-clip: content-box; }
+::-webkit-scrollbar-thumb:hover { background-color: var(--md-primary); }
+
+/* ── Ripple (spawned by theme.js) ──────────────────────────────── */
+.md-ripple {
+  position: absolute; border-radius: 50%; pointer-events: none; background: currentColor;
+  opacity: .2; transform: scale(0); animation: md-ripple .65s var(--md-ease-emph) forwards;
+}
+@keyframes md-ripple { to { transform: scale(1); opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  #md-backdrop .layer { transition: opacity .2s; transform: none !important; }
+  .md-ripple, .main-card-card { animation: none; transition: none; }
+}
